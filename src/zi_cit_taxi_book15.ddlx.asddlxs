@@ -1,0 +1,70 @@
+@Metadata.layer: #CORE
+@UI: {
+  headerInfo: { typeName: 'Taxi Booking',
+                typeNamePlural: 'Taxi Bookings',
+                title: { type: #STANDARD, value: 'BookingUUID' } } }
+annotate view ZC_CIT_TAXI_BOOK15 with
+{
+  /* This creates the "Booking Details" section on the object page */
+  @UI.facet: [
+    { id: 'BookingDetails',
+      purpose: #STANDARD,
+      type: #IDENTIFICATION_REFERENCE,
+      label: 'Booking Details',
+      position: 10 }
+  ]
+
+  @UI: { lineItem:       [ { position: 10, label: 'Booking No' } ],
+         identification: [ { position: 10, label: 'Booking No' } ],
+         selectionField: [ { position: 10 } ] }
+  BookingUUID;
+
+  @UI: { lineItem:       [ { position: 20, label: 'Customer Name' } ],
+         identification: [ { position: 20, label: 'Customer Name' } ],
+         selectionField: [ { position: 20 } ] }
+  CustomerName;
+
+  @UI: { lineItem:       [ { position: 30, label: 'Pickup Location' } ],
+         identification: [ { position: 30, label: 'Pickup Location' } ] }
+  PickupLocation;
+
+  @UI: { lineItem:       [ { position: 40, label: 'Drop Location' } ],
+         identification: [ { position: 40, label: 'Drop Location' } ] }
+  DropLocation;
+
+ @UI: { lineItem:       [ { position: 50, label: 'Status', criticality: 'StatusCriticality' },
+                           { type: #FOR_ACTION, dataAction: 'AssignDriver', label: 'Assign Driver' },
+                           { type: #FOR_ACTION, dataAction: 'StartTrip', label: 'Start Trip' },
+                           { type: #FOR_ACTION, dataAction: 'CompleteTrip', label: 'Complete Trip' } ],
+         identification: [ { position: 50, label: 'Status', criticality: 'StatusCriticality' },
+                           { type: #FOR_ACTION, dataAction: 'AssignDriver', label: 'Assign Driver' },
+                           { type: #FOR_ACTION, dataAction: 'StartTrip', label: 'Start Trip' },
+                           { type: #FOR_ACTION, dataAction: 'CompleteTrip', label: 'Complete Trip' } ],
+         selectionField: [ { position: 30 } ] }
+  Status;
+
+  /* Hide the criticality and admin fields from the UI */
+  @UI.hidden: true
+  StatusCriticality;
+
+  @UI: { identification: [ { position: 60, label: 'Assigned Driver' } ] }
+  DriverID;
+
+  @UI: { identification: [ { position: 70, label: 'Vehicle Number' } ] }
+  VehicleNumber;
+
+  @UI: { identification: [ { position: 80, label: 'Booking Date' } ] }
+  BookingDate;
+
+  @UI: { identification: [ { position: 90, label: 'Fare' } ] }
+  FareAmount;
+  
+  @UI.hidden: true
+  Currency;
+  
+  @UI.hidden: true
+  LocalLastChangedAt;
+  
+  @UI.hidden: true
+  LastChangedAt;
+}

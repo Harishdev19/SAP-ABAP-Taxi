@@ -1,0 +1,44 @@
+managed implementation in class zbp_i_cit_taxi_book15 unique;
+strict ( 2 );
+
+define behavior for ZI_CIT_TAXI_BOOK15 alias TaxiBooking
+persistent table zcit_taxi_book15
+lock master
+authorization master ( global )
+{
+  /* Standard CRUD operations handled automatically by the framework */
+  create;
+  update;
+  delete;
+
+  /* The framework will automatically generate the UUID for us */
+  field ( numbering : managed, readonly ) BookingUUID;
+
+  /* Status should only be changed by our custom buttons, not typed manually */
+  field ( readonly ) Status;
+
+  /* Custom Actions for our business logic */
+  action AssignDriver result [1] $self;
+  action StartTrip result [1] $self;
+  action CompleteTrip result [1] $self;
+
+  /* A determination to automatically set status to 'Booked' when created */
+  determination setInitialStatus on modify { create; }
+
+  /* Map the database fields to our CDS view fields */
+  mapping for zcit_taxi_book1
+  {
+    BookingUUID = booking_uuid;
+    CustomerName = customer_name;
+    PickupLocation = pickup_location;
+    DropLocation = drop_location;
+    DriverID = driver_id;
+    VehicleNumber = vehicle_number;
+    Status = status;
+    BookingDate = booking_date;
+    FareAmount = fare_amount;
+    Currency = currency;
+    LocalLastChangedAt = local_last_changed_at;
+    LastChangedAt = last_changed_at;
+  }
+}
